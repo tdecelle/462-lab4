@@ -5,9 +5,7 @@ ruleset wovyn_base {
 			with account_sid =  keys:twilio{"account_sid"}
 				 auth_token = 	keys:twilio{"auth_token"}
 
-		use module temperature_store.temperatures
-		use module temperature_store.threshold_violations
-		use module temperature_store.inrange_temperatures
+		use module temperature_store 
 
 		shares __testing
 	}
@@ -56,7 +54,7 @@ ruleset wovyn_base {
 		
 		fired {
 			raise wovyn event "threshold_violation"
-				attributes event:attrs
+				attributes event:attrs if temperatureF > temperature_threshold
 		}
 	}
 
